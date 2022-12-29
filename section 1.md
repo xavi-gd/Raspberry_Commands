@@ -39,4 +39,17 @@ node-red admin hash-pw
 
 sudo systemctl restart nodered.service 
 
+section 3 
+node function
+https://nodered.org/docs/user-guide/writing-functions
+
+section 4
+node catch - scopte and context
+https://nodered.org/docs/user-guide/context
+
+section 6 
+store de context
+https://nodered.org/docs/api/context/store/localfilesystem
+https://nodered.org/docs/user-guide/context#context-stores
+
 CHAPTER 6
