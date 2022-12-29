@@ -118,7 +118,18 @@ const data = {
     }
 }
 const active_modules = data.active_modules
-const module_data = data.module_data
+const master = data.module_data[39]
+const slave = data.module_data[40]
+const PACK_VOLTAGE = 0
+const CURRENT = 1
+const REMAIN_CAPACITY = 2
+const AVERAGE_CELL_TEMP = 3
+offset_values = [0.01, 0.10, 0.10, 0.10, 0.10, 1.00, 1.00, 1.00, 0.00, 1.00, 0.00, 0.10, 10.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 1.00, 1.00, 1.00]
+scale_factor_values = [0.00, -10000.00, 0.00, -400.00, -400.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, -400.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, -400.00, 0.00, 0.00, 0.00, 0.00]
+for (let i = 0; i < master.length; i++) {
+    master[i] = master[i] + 1
+}
+const pack_voltage = master[PACK_VOLTAGE]
 
 const arr = []
 console.log(arr)
