@@ -117,7 +117,7 @@ const data = {
         ]
     }
 }
-const active_modules = data.active_modules
+const active_modules = data.active_modules;
 const master = data.module_data[39]
 const slave = data.module_data[40]
 const PACK_VOLTAGE = 0
@@ -132,5 +132,5 @@ for (let i = 0; i < master.length; i++) {
 const pack_voltage = master[PACK_VOLTAGE]
 
 const arr = []
-console.log(arr)
+console.log(master)
 
