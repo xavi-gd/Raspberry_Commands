@@ -13,7 +13,7 @@ const data = {
     "module_data": {
         "39": [
             4985,
-            10000,
+            9505,
             1000,
             560,
             600,
@@ -174,38 +174,41 @@ const data = {
 }
 
 //const module_data = Object.entries(data.module_data)
-const module_keys = Object.keys(data.module_data)
-const active_modules = module_keys.map(key => parseInt(key))
+const modules_keys = Object.keys(data.module_data)
+const active_modules = modules_keys.map(key => parseInt(key))
 
-const module_values = Object.values(data.module_data)
-const scale_factor_values = [0.0100,0.1000,0.1000,0.1000,0.1000,1.0000,1.0000,1.0000,0.0001,1.0000,0.0001,0.1000,10.0000,1.0000,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,0.0010,1.0000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,0.1000,1.0000,1.0000,1.0000]
-const offset_values = [0.0,-10000.0,0.0,-400.0,-400.0,0.0,0.0,0.0,0.0,0.0,0.0,-400.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,-400.0,0.0,0.0,0.0,0.0]
+const modules_values = Object.values(data.module_data)
+const scale_factor_values = [0.0100, 0.1000, 0.1000, 0.1000, 0.1000, 1.0000, 1.0000, 1.0000, 0.0001, 1.0000, 0.0001, 0.1000, 10.0000, 1.0000, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 0.0010, 1.0000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 0.1000, 1.0000, 1.0000, 1.0000]
+const offset_values = [0.0, -10000.0, 0.0, -400.0, -400.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -400.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, -400.0, 0.0, 0.0, 0.0, 0.0]
 
-for (let module = 0; module < module_values.length; module++) {
-    for (let value = 0; value < module_values[module].length; value++) {
-        module_values[module][value] = (module_values[module][value] + offset_values[value]) * scale_factor_values[value]
+for (let module = 0; module < modules_values.length; module++) {
+    for (let value = 0; value < modules_values[module].length; value++) {
+        modules_values[module][value] = (modules_values[module][value] + offset_values[value]) * scale_factor_values[value]
     }
 }
-function Module () {
-    this.id = 0
-    this.volt = 0
-    this.current = 0
-    this.soc = 0
-    this.soh = 0
-    this.full_capacity = 0
-    this.remain_capacity = 0
-    this.env_temp = 0
-    this.avg_cell_temp = 0
-    this.pcb_temp = 0
-    this.remain_charge_time = 0
-    this.remain_discahrge_time = 0
+function Module(id, module_values) {
+    const VOLT = 0, CURRENT = 1, REMAIN_CAPACITY = 2, AVG_TEMP_CELL = 3, ENV_TEMP = 4, SOC = 8, SOH = 10, PCB_TEMP = 11
+    const FIRST_CELL_VOLT = 14, LAST_CELL_VOLT = 29, FIRST_CELL_TEMP = 31, LAST_CELL_TEMP = 46
+    const FULL_CAPACITY = 47, CHARGE_TIME = 48, DISCHARGE_TIME = 49
+    this.id = id
+    this.volt = module_values[VOLT]
+    this.current = module_values[CURRENT]
+    this.remain_capacity = module_values[REMAIN_CAPACITY]
+    this.avg_cell_temp = module_values[AVG_TEMP_CELL]
+    this.env_temp = module_values[ENV_TEMP]
+    this.soc = module_values[SOC]
+    this.soh = module_values[SOH]
+    this.pcb_temp = module_values[PCB_TEMP]
+    this.cell_volt = module_values.slice(FIRST_CELL_VOLT, LAST_CELL_VOLT + 1)
+    this.cell_temp = module_values.slice(FIRST_CELL_TEMP, LAST_CELL_TEMP + 1)
+    this.full_capacity = module_values[FULL_CAPACITY]
+    this.charge_time = module_values[CHARGE_TIME]
+    this.discahrge_time = module_values[DISCHARGE_TIME]
 }
+const modules = new Array(3)
+for (let module = 0; module < modules_values.length; module++) {
+    modules[module] = new Module(active_modules[module], modules_values[module])
+}
+console.log(modules)
 
-const modules = new Module()
-modules.id = [...active_modules]
-
-const FIRST_CELL_VOLT = 14
-const LAST_CELL_VOLT = 29
-const FIRST_CELL_TEMP = 31
-const LAST_CELL_TEMP = 46
 
