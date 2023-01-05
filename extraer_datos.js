@@ -193,8 +193,7 @@ for (let module = 0; module < modules_values.length; module++) {
  */
 class Module {
     constructor(id, module_values) {
-        const VOLT = 0, CURRENT = 1, REMAIN_CAPACITY = 2, AVG_TEMP_CELL = 3, ENV_TEMP = 4, SOC = 8, SOH = 10,
-            PCB_TEMP = 11
+        const VOLT = 0, CURRENT = 1, REMAIN_CAPACITY = 2, AVG_TEMP_CELL = 3, ENV_TEMP = 4, SOC = 8, SOH = 10, PCB_TEMP = 11
         const FIRST_CELL_VOLT = 14, LAST_CELL_VOLT = 29, FIRST_CELL_TEMP = 31, LAST_CELL_TEMP = 46
         const FULL_CAPACITY = 47, CHARGE_TIME = 48, DISCHARGE_TIME = 49
         this.id = id
@@ -217,7 +216,13 @@ class Module {
 const modules = new Array(active_modules.length)
 for (let module = 0; module < modules_values.length; module++) {
     modules[module] = new Module(active_modules[module], modules_values[module])
+    modules[module].charge_time = modules[module].charge_time / 60
+    modules[module].discharge_time = modules[module].discharge_time / 60
+    console.log(modules[module].charge_time)
+    console.log(modules[module].discahrge_time)
+    //modules[module].cell_volt = {...modules[module].cell_volt}
+    //modules[module].cell_temp = {...modules[module].cell_temp}
 }
-console.log(modules)
 
+console.log(modules)
 
